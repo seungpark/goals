@@ -1,0 +1,20 @@
+<h1> <%=@user.username %></h1>
+
+<h2>Received User Comments</h2>
+<ul>
+  <%@user.received_user_comments.each do |comment|%>
+    <li> <%= comment.body %> by: <%= comment.author.username %> </li></br>
+  <%end%>
+</ul>
+
+<form method="POST" action="<%= user_user_comments_url(@user) %>">
+  <%= auth_token %>
+
+<label> Body
+  <input type="text" name="user_comment[body]" value="">
+</label>
+
+<input type="hidden" name="user_comment[user_id]" value="<%=@user.id %>">
+
+<button> Submit </button>
+</form>

@@ -1,0 +1,33 @@
+<h1><%=@goal.title%></h1>
+
+<p><%=@goal.content%></p>
+<p>Completed: <%=@goal.completed == "0" ? "False" : "True"%> </p>
+<p>Private: <%=@goal.privacy == "0" ? "False" : "True"%> </p>
+
+<p>by <%=@goal.user.username%></p>
+
+<% if current_user == @goal.user %>
+  <a href="<%= edit_goal_url(@goal)%>">Edit</a><br>
+  <form method="POST" action="<%= goal_url(@goal) %>">
+    <input type="hidden" name="_method" value="DELETE">
+    <%= auth_token %>
+    <button> Delete </button>
+  </form>
+<%end%>
+
+<h3>Goal Comments</h3>
+<ul>
+  <%@goal.comments.each do |comment| %>
+    <li><%=comment.body%> by <%=comment.author.username%></li>
+  <%end%>
+</ul>
+
+<form method="POST" action="<%=goal_goal_comments_url(@goal)%>" >
+  <%= auth_token %>
+  <input type="hidden" name="goal_comment[goal_id]" value="<%=@goal.id%>" >
+  <input type="text" name="goal_comment[body]" value="">
+  <button>Submit</button>
+</form>
+
+<a href="<%= goals_url %>">All Goals</a>
+<a href="<%= users_url %>">All Users</a>

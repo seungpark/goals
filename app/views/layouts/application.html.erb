@@ -8,6 +8,18 @@
 </head>
 <body>
 
+<% if current_user.nil? %>
+  <a href="<%= new_session_url %>"> Login </a>
+  <a href="<%= new_user_url %>"> Sign Up </a>
+<% else %>
+  <form method="POST" action="<%= session_url%>">
+    <%= auth_token %>
+    <input type="hidden" name="_method" value="DELETE">
+
+    <button> Log Out </button>
+  </form>
+<% end %>
+<%= flash[:errors].join.html_safe if flash[:errors] %>
 <%= yield %>
 
 </body>

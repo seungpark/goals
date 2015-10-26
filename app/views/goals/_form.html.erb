@@ -1,0 +1,27 @@
+<% action_url = @goal.persisted? ? goal_url(@goal) : goals_url %>
+<% form_method = @goal.persisted? ? "PATCH" : "POST" %>
+
+
+<form method="POST" action="<%= action_url %>">
+  <input type="hidden" name="_method" value="<%= form_method %>">
+  <%= auth_token %>
+  <label> Title
+    <input type="text" name="goal[title]" value="<%= @goal.title %>">
+  </label></br>
+  <label> Content </br>
+    <textarea row=5 cols=20 name="goal[content]"><%= @goal.content %></textarea>
+  </label></br>
+
+  <p> Privacy
+
+  <label> True
+    <input type="radio" name="goal[privacy]" value=1  <%= "checked" if @goal.privacy == "1"  %>>
+  </label>
+
+  <label> False
+    <input type="radio" name="goal[privacy]" value=0 <%= "checked" if @goal.privacy == "0" %>>
+  </label></br>
+  </p>
+
+  <button>Submit</button>
+</form>
